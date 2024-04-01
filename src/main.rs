@@ -49,6 +49,7 @@ fn main() {
 
     //build window contents
     appmenu::build_menu(s, WIN_WIDTH);
+    build_language_selector();
     build_content();
 
     window.make_resizable(true);
@@ -72,9 +73,9 @@ fn build_content() {
     pack.set_spacing(0); // Adjust spacing between the containers if needed
 
     build_left_panel();
-    // Second container
-    let _frame2 = Frame::new(LEFT_WIDTH, 200, RIGHT_WIDTH, 260, "Right Container");
+    build_right_panel();
     pack.end();
+
 }
 
 fn build_left_panel() {
@@ -82,13 +83,17 @@ fn build_left_panel() {
     pack.set_type(PackType::Vertical);
     pack.set_spacing(0); // Adjust spacing between the containers if needed
 
-    draw_left_top_panel();
+    build_left_top_panel();
 
     build_left_middle_panel();
 
     build_left_bottom_panel();
 
     pack.end();
+}
+
+fn build_right_panel() {
+    let _frame2 = Frame::new(LEFT_WIDTH, 200, RIGHT_WIDTH, 260, "Right Container"); 
 }
 fn build_left_bottom_panel() {
     let mut pack = Pack::new(0, 40, LEFT_WIDTH, 260, "");
@@ -109,30 +114,30 @@ fn draw_text_aligned_left(text: &str) {
         .set_align(enums::Align::Left | enums::Align::Inside);
 }
 fn build_left_middle_panel() {
-    let mut tabs2 = Tabs::new(0, MENU_HEIGHT, LEFT_WIDTH, 400, "");
-    let mut flex1 = Flex::default_fill().with_label("Corpus\t\t").row();
+    let mut tabs = Tabs::new(0, MENU_HEIGHT, LEFT_WIDTH, 300, "");
+    let mut flex = Flex::default_fill().with_label("Corpus\t\t").row();
     let mut col = Flex::default().column();
-    flex1.fixed(&col, 160);
+    flex.fixed(&col, LEFT_WIDTH);
     col.set_pad(10);
     col.set_margin(10);
 
-    //let _frame1 = Frame::new(0, 40, 200, 80, "Top Container");
-    let mut frame2_pack = Pack::new(0, 40, LEFT_WIDTH, 260, "");
-    frame2_pack.set_type(fltk::group::PackType::Vertical);
-    frame2_pack.set_spacing(10); // Sets the spacing between widgets
-
-    frame2_pack.end();
 
     col.end();
-    flex1.end();
+    flex.end();
 
     let flex2 = Flex::default_fill().with_label("Datasets\t\t").row();
+    let mut col2 = Flex::default().column();
+     col2.set_pad(10);
+    col2.set_margin(10);
+
+
+    col2.end();
     flex2.end();
 
-    tabs2.end();
-    tabs2.auto_layout();
+    tabs.end();
+    tabs.auto_layout();
 }
-fn draw_left_top_panel() {
+fn build_left_top_panel() {
     let mut tabs = Tabs::new(0, MENU_HEIGHT, LEFT_WIDTH, 300, "");
     let mut flex = Flex::default_fill().with_label("Sessioni\t\t").row();
     let mut col = Flex::default().column();
@@ -145,11 +150,11 @@ fn draw_left_top_panel() {
     col.end();
     flex.end();
 
-    let grp2 = Flex::default_fill().with_label("Risorsi\t\t").row();
-    grp2.end();
+    let flex2 = Flex::default_fill().with_label("Risorsi\t\t").row();
+    flex2.end();
 
-    let grp3 = Flex::default_fill().with_label("Mie risorse\t\t").row();
-    grp3.end();
+    let flex3 = Flex::default_fill().with_label("Mie risorse\t\t").row();
+    flex3.end();
 
     tabs.end();
     tabs.auto_layout();
@@ -166,5 +171,11 @@ fn draw_left_top_panel_tab1() {
     draw_text_aligned_left("Sessione:");
     let mut choice = menu::Choice::new(50, 100, LEFT_WIDTH, 30, None);
     choice.add_choice("Session: 05-03-2024 10:35 | 06-03-2024 14:22 ");
+
     pack.end();
+}
+fn build_language_selector(){
+    let mut choice = menu::Choice::new(WIN_WIDTH-100, 0, 100, 30, None);
+    choice.add_choice("Italiano");
+    
 }
