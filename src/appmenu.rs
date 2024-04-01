@@ -12,6 +12,7 @@ use fltk::{
 use fltk::{enums::*, frame::Frame, group::*, menu::*, prelude::*, window::*};
 use fltk::{prelude::*, *};
 
+const LOGO_WIDTH:i32=180;
 
 #[derive(Debug, Copy, Clone)]
 pub enum Message {
@@ -45,8 +46,7 @@ pub enum Message {
 pub fn build_menu(s: app::Sender<Message>,WIN_WIDTH :i32) {
   
 
-
-    let mut menu_bar = MenuBar::new(0, 0, WIN_WIDTH, 30, None);
+    let mut menu_bar = MenuBar::new(LOGO_WIDTH, 0, WIN_WIDTH, 30, None);
     menu_bar.add_emit(
         "&File/Corpus Nuovo\t",
         Shortcut::None,

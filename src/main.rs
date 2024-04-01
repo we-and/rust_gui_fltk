@@ -1,5 +1,6 @@
 use fltk::{
     app,
+    image::PngImage,
     button::*,
     group::{Flex, Tabs},
     input::Input,
@@ -24,10 +25,9 @@ use crate::appmenu::Message;
 const WIN_WIDTH: i32 = 1000;
 const WIN_HEIGHT: i32 = 900;
 const LEFT_WIDTH: i32 = 300;
-const MENU_HEIGHT: i32 = 30;
+const MENU_HEIGHT: i32 = 40;
 const RIGHT_WIDTH: i32 = WIN_WIDTH - LEFT_WIDTH;
-
-
+const LOGO_WIDTH:i32=180;
 fn main() {
  
     //build app and apply theme
@@ -49,6 +49,7 @@ fn main() {
 
     //build window contents
     appmenu::build_menu(s, WIN_WIDTH);
+    build_logo();
     build_language_selector();
     build_content();
 
@@ -63,7 +64,14 @@ fn main() {
         }
     }
 }
-
+ fn build_logo(){
+     // Load the image
+     let mut image = PngImage::load("./assets/logo.png").unwrap();
+     image.scale(LOGO_WIDTH, MENU_HEIGHT, true, true);
+     // Create a frame to hold the image
+     let mut frame = Frame::new(0, 0, LOGO_WIDTH, MENU_HEIGHT, "");
+     frame.set_image(Some(image));
+ }
 
 
 fn build_content() {
