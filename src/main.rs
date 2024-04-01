@@ -28,9 +28,8 @@ const MENU_HEIGHT: i32 = 30;
 
 const RIGHT_WIDTH: i32 = WIN_WIDTH - LEFT_WIDTH;
 
-fn draw_menu() {
-    let (s, r) = app::channel::<Message>();
-
+fn draw_menu(s: app::Sender<Message>) {
+  
 
 
     let mut menu_bar = MenuBar::new(0, 0, WIN_WIDTH, 30, None);
@@ -39,26 +38,26 @@ fn draw_menu() {
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::File_CorpusNuovo,
     );
     menu_bar.add_emit(
         "&File/Corpus esistente\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::File_CorpusEsistente,
     );    menu_bar.add_emit(
         "&File/Scan + Parse Alfabeto\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::File_ScanParseAlfabeto,
     );    menu_bar.add_emit(
         "&File/Scan + Parse Separatori\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::File_ScanParseSeparator,
     );
 
     menu_bar.add_emit(
@@ -66,14 +65,14 @@ fn draw_menu() {
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::File_Importa_MieRisorse,
     );
     menu_bar.add_emit(
         "&File/Importa/Tabella in Dataset\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::File_Importa_TabellaInDataset,
     );
 
     menu_bar.add_emit(
@@ -81,14 +80,14 @@ fn draw_menu() {
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::File_Importa_ListaSempliceInDataset,
     );
     menu_bar.add_emit(
         "&File/Esporta/Documenti - tipi",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::File_Esporta_DocumentiTipi,
     );
 
     menu_bar.add_emit(
@@ -96,7 +95,7 @@ fn draw_menu() {
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::File_Esporta_TipiVariabili,
     );
 
     menu_bar.add_emit(
@@ -104,7 +103,7 @@ fn draw_menu() {
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::File_Esporta_RiconstruzioneCorpus,
     );
 
     menu_bar.add_emit(
@@ -112,7 +111,7 @@ fn draw_menu() {
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::File_Esporta_Subcorpus,
     );
 
     menu_bar.add_emit(
@@ -120,35 +119,35 @@ fn draw_menu() {
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::File_Esci,
     );
     menu_bar.add_emit(
         "Analisi/Pre-Tratamento\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::Analisi_Pretratamento,
     );
     menu_bar.add_emit(
         "Analisi/Lessicale/Tagging\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::Analisi_Lessicale_Tagging,
     );
     menu_bar.add_emit(
-        "Analisi/Lessicale/Estrazione di Parole Chiave  \t",
+        "Analisi/Lessicale/Estrazione di Parole Chiave\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::Analisi_Lessicale_EstrazioneDiParoleChiave,
     );
     menu_bar.add_emit(
         "Analisi/Testuale\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::Analisi_Testuale,
     );
 
     menu_bar.add_emit(
@@ -156,56 +155,56 @@ fn draw_menu() {
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::Impostationi_ModalitaCore_MonoCore,
     );
     menu_bar.add_emit(
         "Impostationi/Modalità Core/Multi-Core\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::Impostationi_ModalitaCore_MultiCore,
     );
     menu_bar.add_emit(
         "Impostationi/Modalità Schermo\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::Impostationi_ModalitaSchermo,
     );
     menu_bar.add_emit(
         "Info/Su TalTac4\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::Info_SuTalTac4,
     );
     menu_bar.add_emit(
         "Info/Licenza\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::Info_Licenza,
     );
     menu_bar.add_emit(
         "Info/Manuale Utente\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::Info_ManualeUtente,
     );
     menu_bar.add_emit(
         "Info/Tutorial\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::Info_Tutorial,
     );
     menu_bar.add_emit(
         "Info/Supporto\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         s,
-        Message::Quit,
+        Message::Info_Supporto,
     );
     menu_bar.end();
 }
@@ -320,6 +319,9 @@ fn draw_left_top_panel_tab1(){
 }
 
 fn main() {
+    let (s, r) = app::channel::<Message>();
+
+    
     let app = app::App::default();
     let theme = ColorTheme::new(color_themes::GRAY_THEME);
     theme.apply();
@@ -331,12 +333,46 @@ fn main() {
         .with_label("TaLTac 4")
         .center_screen();
 
-    draw_menu();
+    draw_menu(s);
     draw_content();
 
     wind.make_resizable(true);
     wind.end();
     wind.show();
 
-    app.run().unwrap();
+//    app.run().unwrap();
+
+    while app.wait() {
+        if let Some(msg) = r.recv() {
+            match msg {
+                Message::File_CorpusNuovo=> { // Call your function here
+                    println!("File > Corpus Nuovo");
+                },
+                Message::File_CorpusEsistente=> { },
+                Message::File_ScanParseAlfabeto=> { },
+                Message::File_ScanParseSeparator=> { },
+                Message::File_Importa_MieRisorse=> { },
+                Message::File_Importa_TabellaInDataset=> { },
+                Message::File_Importa_ListaSempliceInDataset=> { },
+                Message::File_Esporta_DocumentiTipi=> { },
+                Message::File_Esporta_TipiVariabili=> { },
+                Message::File_Esporta_RiconstruzioneCorpus=> { },
+                Message::File_Esporta_Subcorpus=> { },
+                Message::File_Esci=> { },
+                Message::Analisi_Pretratamento=> { },
+                Message::Analisi_Lessicale_Tagging=> { },
+                Message::Analisi_Lessicale_EstrazioneDiParoleChiave=> { },
+                Message::Analisi_Testuale=> { },
+                Message::Impostationi_ModalitaCore_MonoCore=> { },
+                Message::Impostationi_ModalitaCore_MultiCore=> { },
+                Message::Impostationi_ModalitaSchermo=> { },
+                Message::Info_SuTalTac4=> { },
+                Message::Info_Licenza=> { },
+                Message::Info_ManualeUtente=> { },
+                Message::Info_Tutorial=> { },
+                Message::Info_Supporto=> {}
+            }
+        }
+    }
+
 }
