@@ -32,7 +32,7 @@ fn main() {
  
     //build app and apply theme
     let app = app::App::default();
-    let theme = ColorTheme::new(color_themes::GRAY_THEME);
+    let theme = ColorTheme::new(color_themes::TAN_THEME);
     theme.apply();
     let widget_theme = WidgetTheme::new(ThemeType::Aero);
     widget_theme.apply();
@@ -51,7 +51,7 @@ fn main() {
     appmenu::build_menu(s, WIN_WIDTH);
     build_logo();
     build_language_selector();
-    build_content();
+    build_content(s);
 
     window.make_resizable(true);
     window.end();
@@ -74,24 +74,24 @@ fn main() {
  }
 
 
-fn build_content() {
+fn build_content(s: app::Sender<Message>) {
     // Packed widget to hold the containers side by side
     let mut pack = Pack::new(0, 40, LEFT_WIDTH, 260, "");
     pack.set_type(PackType::Horizontal);
     pack.set_spacing(0); // Adjust spacing between the containers if needed
 
-    build_left_panel();
+    build_left_panel(s);
     build_right_panel();
     pack.end();
 
 }
 
-fn build_left_panel() {
+fn build_left_panel(s: app::Sender<Message>) {
     let mut pack = Pack::new(0, 40, LEFT_WIDTH, 260, "");
     pack.set_type(PackType::Vertical);
     pack.set_spacing(0); // Adjust spacing between the containers if needed
 
-    build_left_top_panel();
+    build_left_top_panel(s);
 
     build_left_middle_panel();
 
@@ -145,17 +145,12 @@ fn build_left_middle_panel() {
     tabs.end();
     tabs.auto_layout();
 }
-fn build_left_top_panel() {
+fn build_left_top_panel(s: app::Sender<Message>) {
     let mut tabs = Tabs::new(0, MENU_HEIGHT, LEFT_WIDTH, 300, "");
     let mut flex = Flex::default_fill().with_label("Sessioni\t\t").row();
-    let mut col = Flex::default().column();
-    flex.fixed(&col, LEFT_WIDTH);
-    col.set_pad(10);
-    col.set_margin(10);
+  flex.set_margin(10);
+    draw_left_top_panel_tab1(s);
 
-    draw_left_top_panel_tab1();
-
-    col.end();
     flex.end();
 
     let flex2 = Flex::default_fill().with_label("Risorsi\t\t").row();
@@ -168,22 +163,30 @@ fn build_left_top_panel() {
     tabs.auto_layout();
 }
 
-fn draw_left_top_panel_tab1() {
+fn draw_left_top_panel_tab1(s: app::Sender<Message>) {
     //let _frame1 = Frame::new(0, 40, 200, 80, "Top Container");
     let mut pack = Pack::new(0, 40, LEFT_WIDTH, 260, "");
     pack.set_type(fltk::group::PackType::Vertical);
     pack.set_spacing(10); // Sets the spacing between widgets
 
     let mut btn1 = button::Button::new(0, 0, LEFT_WIDTH, 40, "Crea une Nuova Sessione");
+     // Set a callback for the button
+     btn1.set_callback(move |_| {
+        s.send(Message::Button_NuovaSessione);
+    });
     let mut btn2 = button::Button::new(0, 0, LEFT_WIDTH, 40, "Cancella sessione");
+    btn2.set_callback(move |_| {
+        s.send(Message::Button_CancellaSessione);
+    });
     draw_text_aligned_left("Sessione:");
     let mut choice = menu::Choice::new(50, 100, LEFT_WIDTH, 30, None);
     choice.add_choice("Session: 05-03-2024 10:35 | 06-03-2024 14:22 ");
-
+choice.set_value(0);
     pack.end();
 }
 fn build_language_selector(){
     let mut choice = menu::Choice::new(WIN_WIDTH-100, 0, 100, 30, None);
     choice.add_choice("Italiano");
+    choice.set_value(0); 
     
 }

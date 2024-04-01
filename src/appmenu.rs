@@ -16,6 +16,8 @@ const LOGO_WIDTH:i32=180;
 
 #[derive(Debug, Copy, Clone)]
 pub enum Message {
+    Button_NuovaSessione,
+    Button_CancellaSessione,
     File_CorpusNuovo,
     File_CorpusEsistente,
     File_ScanParseAlfabeto,
@@ -227,6 +229,13 @@ pub fn build_menu(s: app::Sender<Message>,WIN_WIDTH :i32) {
 pub fn handle_menu_messages(msg:Message     ){
 
     match msg {
+        Message::Button_NuovaSessione =>{
+            println!("Nuova sessione");
+            
+        }, Message::Button_CancellaSessione =>{
+            println!("Cancella sessione");
+            
+        },
         Message::File_CorpusNuovo=> { // Call your function here
             println!("File > Corpus Nuovo");
         },
