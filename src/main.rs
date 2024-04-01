@@ -244,11 +244,15 @@ fn draw_left_bottom_panel() {
    leftpack.end();
 }
 fn draw_left_bottom_panel_content(){
-    let _frame3 = Frame::new(0, 400, LEFT_WIDTH, 30, "Dati");
-    let mut frame = Frame::new(0, 0, LEFT_WIDTH, 30, "Nome: Sessione del None");
-    let mut frame2 = Frame::new(0, 0, LEFT_WIDTH, 30, "File: VOC (|type|, Sum occ): (?,?)");
-    let mut frame3 = Frame::new(0, 0, LEFT_WIDTH, 30, "Multi-core: OFF");
-
+    drawLeftText("Dati");
+    drawLeftText("Nome: Sessione del None");
+    drawLeftText("File: VOC (|type|, Sum occ): (?,?)");
+    drawLeftText("Multi-core: OFF");
+ 
+ }
+fn drawLeftText(text:&str){
+    let _frame3 = Frame::new(0, 400, LEFT_WIDTH, 30, text).set_align(enums::Align::Left | enums::Align::Inside );
+    
 }
 fn draw_left_middle_panel() {
     let mut tabs2 = Tabs::new(0, MENU_HEIGHT, LEFT_WIDTH, 400, "");
@@ -308,7 +312,7 @@ fn draw_left_top_panel_tab1(){
 
       let mut btn1 = button::Button::new(0, 0, LEFT_WIDTH, 40, "Crea une Nuova Sessione");
       let mut btn2 = button::Button::new(0, 0, LEFT_WIDTH, 40, "Cancella sessione");
-      let mut lbl = frame::Frame::new(0, 0, LEFT_WIDTH, 40, "Sessione:");
+      drawLeftText("Sessione:");
       let mut choice = menu::Choice::new(50, 100, LEFT_WIDTH, 30, None);
       choice.add_choice("Session: 05-03-2024 10:35 | 06-03-2024 14:22 ");
       frame1_pack.end();
@@ -321,6 +325,7 @@ fn main() {
     theme.apply();
     let widget_theme = WidgetTheme::new(ThemeType::Aero);
     widget_theme.apply();
+    app::set_font_size(12);
     let mut wind = Window::default()
         .with_size(WIN_WIDTH, WIN_HEIGHT)
         .with_label("TaLTac 4")
