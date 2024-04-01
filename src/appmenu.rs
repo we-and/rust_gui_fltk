@@ -16,6 +16,7 @@ const LOGO_WIDTH:i32=180;
 
 #[derive(Debug, Copy, Clone)]
 pub enum Message {
+    ComboBox_LanguageChanged,
     Button_NuovaSessione,
     Button_CancellaSessione,
     File_CorpusNuovo,
@@ -229,6 +230,10 @@ pub fn build_menu(s: app::Sender<Message>,WIN_WIDTH :i32) {
 pub fn handle_menu_messages(msg:Message     ){
 
     match msg {
+        Message::ComboBox_LanguageChanged =>{
+            println!("Language Changed");
+          
+        },
         Message::Button_NuovaSessione =>{
             println!("Nuova sessione");
             

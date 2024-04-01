@@ -50,7 +50,7 @@ fn main() {
     //build window contents
     appmenu::build_menu(s, WIN_WIDTH);
     build_logo();
-    build_language_selector();
+    build_language_selector(s);
     build_content(s);
 
     window.make_resizable(true);
@@ -184,9 +184,11 @@ fn draw_left_top_panel_tab1(s: app::Sender<Message>) {
 choice.set_value(0);
     pack.end();
 }
-fn build_language_selector(){
+fn build_language_selector(s: app::Sender<Message>){
     let mut choice = menu::Choice::new(WIN_WIDTH-100, 0, 100, 30, None);
-    choice.add_choice("Italiano");
+    choice.add_choice("Italiano | English");
     choice.set_value(0); 
-    
+    choice.set_callback(move |_| {
+        s.send(Message::ComboBox_LanguageChanged);
+    });
 }
